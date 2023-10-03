@@ -22,3 +22,5 @@ Imports:
     rvest (>= 1.0.3),
     withr
 Roxygen: list(markdown = TRUE)
+URL: https://github.com/kanahia/libroScrapeR
+BugReports: https://github.com/kanahia/libroScrapeR/issues
