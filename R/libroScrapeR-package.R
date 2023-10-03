@@ -6,6 +6,6 @@
 #' @importFrom glue glue
 #' @importFrom lifecycle deprecated
 ## usethis namespace: end
-#'@author kanahia
+#' @author kanahia
 
 NULL
