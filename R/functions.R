@@ -34,6 +34,8 @@ get_last_page <- function(html){
         rvest::html_attr("max") %>%
         as.numeric()
 
+    if(is.na(max_page)) {max_page <- 1}
+
     return(max_page)
 }
 
