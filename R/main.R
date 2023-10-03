@@ -5,10 +5,10 @@
 
 
 # Example how to run the entire workflow
-URL <- "https://lubimyczytac.pl/ksiegozbior/XyeMyrJrGh"
+#URL <- "https://lubimyczytac.pl/ksiegozbior/XyeMyrJrGh"
 
-res <-
-  run_libroScrapeR(URL = URL)
+#res <-
+#  run_libroScrapeR(URL = URL)
 
 
 
