@@ -4,8 +4,8 @@
 \name{libroScrapeR-package}
 \alias{libroScrapeR}
 \alias{libroScrapeR-package}
-\title{libroScrapeR: What the Package Does (Title Case)}
+\title{libroScrapeR: The aim of this package is to facilitate data export from www.lubimyczytac.pl website.}
 \description{
-More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
+Package helps to extract several fields describing user library, including title, author, shelf, rate, review and book ISBN number. Extracted data can be utilized as an input for third part services like [https://www.goodreads.com/](https://www.goodreads.com/)
 }
 \keyword{internal}

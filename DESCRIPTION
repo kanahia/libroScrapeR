@@ -1,11 +1,13 @@
 Package: libroScrapeR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: The aim of this package is to facilitate data export from www.lubimyczytac.pl website.
 Version: 0.1.6
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: kanahia
+Maintainer: The package maintainer <kanahia@iimcb.gov.pl> <zaba169@wp.pl>
+Description: Package helps to extract several fields describing user library, 
+    including title, author, shelf, rate, review and book ISBN number. 
+    Extracted data can be utilized as an input for third part services like 
+    [https://www.goodreads.com/](https://www.goodreads.com/)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
