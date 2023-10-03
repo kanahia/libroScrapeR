@@ -2,10 +2,10 @@
 # generate results --------------------------------------------------------
 
 # URL <- "https://lubimyczytac.pl/ksiegozbior/xc5GvparjG"
-# URL <- "https://lubimyczytac.pl/ksiegozbior/XyeMyrJrGh"
-#
-# res <-
-#   run_libroScrapeR(URL = URL)
+URL <- "https://lubimyczytac.pl/ksiegozbior/XyeMyrJrGh"
+
+res <-
+  run_libroScrapeR(URL = URL)
 
 
 
