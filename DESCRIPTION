@@ -24,3 +24,7 @@ Imports:
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/kanahia/libroScrapeR
 BugReports: https://github.com/kanahia/libroScrapeR/issues
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
