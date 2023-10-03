@@ -1,8 +1,8 @@
 
 # generate results --------------------------------------------------------
 
-URL <- "https://lubimyczytac.pl/ksiegozbior/xc5GvparjG"
-#URL <- "https://lubimyczytac.pl/ksiegozbior/XyeMyrJrGh"
+#URL <- "https://lubimyczytac.pl/ksiegozbior/xc5GvparjG"
+URL <- "https://lubimyczytac.pl/ksiegozbior/XyeMyrJrGh"
 
 page_html <- rvest::read_html(x = URL)
 

@@ -11,6 +11,12 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 Imports: 
-    magrittr,
-    RSelenium,
-    rvest
+    cli,
+    glue,
+    lifecycle,
+    magrittr (>= 2.0.3),
+    rlang,
+    RSelenium (>= 1.7.9),
+    rvest (>= 1.0.3),
+    withr
+Roxygen: list(markdown = TRUE)
