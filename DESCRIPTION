@@ -1,9 +1,12 @@
 Package: libroScrapeR
 Type: Package
-Title: The aim of this package is to facilitate data export from www.lubimyczytac.pl website.
+Title: Facilitate data export from www.lubimyczytac.pl website.
 Version: 0.1.7
-Author: kanahia
-Maintainer: kanahia@iimcb.gov.pl
+Authors@R: 
+    person(given = "kanahia",
+           role = c("aut", "cre"),
+           email = "kanahia@iimcb.gov.pl")
+Depends: R (>= 3.5)           
 Description: Package helps to extract several fields describing user library, 
     including title, author, shelf, rate, review and book ISBN number. 
     Extracted data can be utilized as an input for third part services like 

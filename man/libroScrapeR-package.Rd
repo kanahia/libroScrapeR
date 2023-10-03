@@ -4,8 +4,20 @@
 \name{libroScrapeR-package}
 \alias{libroScrapeR}
 \alias{libroScrapeR-package}
-\title{libroScrapeR: The aim of this package is to facilitate data export from www.lubimyczytac.pl website.}
+\title{libroScrapeR: Facilitate data export from www.lubimyczytac.pl website.}
 \description{
 Package helps to extract several fields describing user library, including title, author, shelf, rate, review and book ISBN number. Extracted data can be utilized as an input for third part services like [https://www.goodreads.com/](https://www.goodreads.com/)
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/kanahia/libroScrapeR}
+  \item Report bugs at \url{https://github.com/kanahia/libroScrapeR/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: kanahia \email{kanahia@iimcb.gov.pl}
+
 }
 \keyword{internal}
