@@ -175,3 +175,95 @@ get_book_details <- function(library_html,
   return(out_list)
 }
 
+
+#' run_libroScrapeR
+#'
+#' @param URL
+#'
+#' @import rvest
+#' @import magrittr
+#' @import RSelenium
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#'
+#' res <- run_libroScrapeR(URL = URL)
+#'
+run_libroScrapeR <- function(URL) {
+
+  page_html <- rvest::read_html(x = URL)
+
+  # RSelenium
+
+  # Open firefox and extract source
+  rD <- RSelenium::rsDriver(chromever = NULL)
+  remDr <- rD[["client"]]
+  remDr$navigate(URL)
+
+  # Give some time to load
+  Sys.sleep(4)
+  # Increase window size to find elements
+  remDr$maxWindowSize()
+
+  # Close add
+  closeAdd <- remDr$findElement(using = "css selector",
+                                value = "#onetrust-accept-btn-handler")
+  closeAdd$clickElement()
+
+  #generate res
+  all_data <- list()
+  page <- 0
+  max_page <- get_last_page(html = page_html)
+
+  # loop over pages
+  while(page < max_page +1) {
+
+    if(page > max_page) {
+
+      break
+
+    } else {
+
+      if(page != 0) {
+        message(paste0("Proccessing page: ", page, "/", max_page))
+        }
+
+      #get books data
+      books_content_row <-
+        remDr$findElement(using = "id",
+                          value = "booksFilteredListPaginator")
+
+      books_html <- books_content_row$getPageSource()
+
+      # for scrapping
+      l <- get_links(html = rvest::read_html(unlist(books_html)))
+
+      each_book <- lapply(X = l, FUN = rvest::read_html)
+
+      #
+
+      all_data[[page+1]] <- get_book_details(library_html = books_html,
+                                             book_html = each_book)
+
+      Sys.sleep(0.2)
+
+      if(max_page != 1) {
+        next_button <-
+          remDr$findElement(using = "xpath", '//a[@aria-label="Next"]')
+
+        next_button$clickElement()
+      }
+
+    }
+
+    page <- page +1
+
+  }
+
+  df <- as.data.frame(do.call("rbind", all_data[c(2:max_page)]))
+  message("Script has been completed!")
+
+  return(df)
+}
