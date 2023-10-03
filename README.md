@@ -129,9 +129,9 @@ remDr <- rD$client
 
 6.  Go back to R and run:
 
-7.  for windows it should work without any arguments
+- for windows it should work without any arguments
 
-8.  on archlinux works with rD \<- RSelenium::rsDriver(chromever = NULL)
+- on archlinux works with rD \<- RSelenium::rsDriver(chromever = NULL)
 
 </div>
 

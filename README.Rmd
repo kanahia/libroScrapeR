@@ -124,9 +124,9 @@ Confirm by `cmd.exe -> java -version (Windows)`
 
 4. Go back to R and run:
 
-  1. for windows it should work without any arguments
+  * for windows it should work without any arguments
   
-  2. on archlinux works with rD <- RSelenium::rsDriver(chromever = NULL)
+  * on archlinux works with rD <- RSelenium::rsDriver(chromever = NULL)
 
 </div>
 
