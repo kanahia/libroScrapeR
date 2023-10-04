@@ -93,7 +93,7 @@ get_ISBN <- function(book_html) {
              test_con <-
                any(grepl(pattern = "ISBN",
                          x = x %>%
-                           html_nodes("dt")))
+                           rvest::html_nodes("dt")))
              # at which position (sometimes it may differ)
              if(test_con) {
                where <-
