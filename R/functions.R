@@ -142,8 +142,8 @@ get_book_details <- function(library_html,
         "div.authorAllBooks__singleTextShelfRight", #shelf
         "div.authorAllBooks__singleText",
         #"div.small",
-        #"div.comments-list"),
-        "p.expandTextNoJS.p-expanded.js-expanded.mb-0"),
+        "div.comments-list"),
+        #"p.expandTextNoJS.p-expanded.js-expanded.mb-0"),
       c("Title", "Author", "Shelves", "My Rating",
         #"Date Read",
         "My Review"))
