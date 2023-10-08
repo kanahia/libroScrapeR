@@ -124,6 +124,7 @@ get_ISBN <- function(book_html) {
 #'
 #' @import rvest
 #' @import magrittr
+#' @importFrom stats setNames
 #'
 #' @return dataframe
 #' @export
@@ -136,17 +137,17 @@ get_book_details <- function(library_html,
                              book_html) {
 
   attr_list <-
-    setNames(
+    stats::setNames(
       c("a.authorAllBooks__singleTextTitle",
         "div.authorAllBooks__singleTextAuthor",
         "div.authorAllBooks__singleTextShelfRight", #shelf
         "div.authorAllBooks__singleText",
-        #"div.small",
+        "div.col.authorAllBooks__singleImg.authorAllBooks__singleImg--list",
         #"div.comments-list"),
+        "div.pl-md-4",
         "p.expandTextNoJS.p-expanded.js-expanded.mb-0"),
       c("Title", "Author", "Shelves", "My Rating",
-        #"Date Read",
-        "My Review"))
+        "Date Read", "My Review", "My Review filled"))
 
   out_list <- list()
 
@@ -155,7 +156,7 @@ get_book_details <- function(library_html,
       rvest::read_html(unlist(library_html)) %>%
       rvest::html_elements(css = attr_list[i]) %>%
       rvest::html_text2()
-  }
+    }
 
   out_list$`My Rating` <-
     ifelse(test = grepl(".*Ocenił na", out_list$`My Rating`),
@@ -167,9 +168,21 @@ get_book_details <- function(library_html,
 
   out_list$ISBN <- get_ISBN(book_html = book_html)
 
-  out_list$`My Review` <-
-    out_list$`My Review` %>%
-    gsub(pattern = "\\\n", replacement = "")
+  out_list$`Date Read` <-
+    ifelse(test = grepl(pattern = "Przeczytał", x = out_list$`Date Read`),
+           yes = substr(x = out_list$`Date Read`, start = 13, stop = 22),
+           no = NA)
+
+  # review
+  filled_review <- which(out_list$`My Review` != "")
+  out_list$`My Review`[filled_review] <- out_list$`My Review filled`
+
+  # out_list$`My Review` <-
+  #   out_list$`My Review` %>%
+  #   gsub(pattern = "\\\n", replacement = "")
+
+  out_list <- out_list[c("Title", "Author", "ISBN", "My Rating",
+                         "Date Read", "Shelves", "My Review")]
 
   out_list <- do.call("cbind", out_list)
 
@@ -184,6 +197,7 @@ get_book_details <- function(library_html,
 #' @import rvest
 #' @import magrittr
 #' @import RSelenium
+#' @importFrom progress progress_bar
 #'
 #' @return dataframe
 #' @export
@@ -197,14 +211,13 @@ run_libroScrapeR <- function(URL) {
   page_html <- rvest::read_html(x = URL)
 
   # RSelenium
-
-  # Open firefox and extract source
+  # Open browser and extract source
   rD <- RSelenium::rsDriver(chromever = NULL)
   remDr <- rD[["client"]]
   remDr$navigate(URL)
 
   # Give some time to load
-  Sys.sleep(4)
+  Sys.sleep(3.5)
   # Increase window size to find elements
   remDr$maxWindowSize()
 
@@ -213,57 +226,69 @@ run_libroScrapeR <- function(URL) {
                                 value = "#onetrust-accept-btn-handler")
   closeAdd$clickElement()
 
+  # move to the first page
+  next_button <-
+    remDr$findElement(using = "xpath", '//a[@aria-label="Next"]')
+  next_button$clickElement()
+
   #generate res
   all_data <- list()
-  page <- 0
+  #page <- 0
   max_page <- get_last_page(html = page_html)
+  pages <- 1:(max_page +1)
 
-  # loop over pages
-  while(page < max_page +1) {
+  # progress bar
+  pb <-
+    progress::progress_bar$new(
+      format = "(:spin) [:bar] :percent [Elapsed time: :elapsedfull || Estimated time remaining: :eta]",
+      total = max_page +1,
+      complete = "=",   # Completion bar character
+      incomplete = "-", # Incomplete bar character
+      current = ">",    # Current bar character
+      clear = FALSE,    # If TRUE, clears the bar when finish
+      width = 100)
+  # progress bar end
 
-    if(page > max_page) {
+  for(page in seq_along(pages)) {
 
-      break
+    pb$tick()
 
-    } else {
+    # if(page <= max_page) {
+    #   message(paste0("Proccessing page: ", page, "/", max_page))
+    # }
 
-      if(page != 0) {
-        message(paste0("Proccessing page: ", page, "/", max_page))
-        }
+    #get books data
+    books_content_row <-
+      remDr$findElement(using = "id",
+                        value = "booksFilteredListPaginator")
 
-      #get books data
-      books_content_row <-
-        remDr$findElement(using = "id",
-                          value = "booksFilteredListPaginator")
+    books_html <- books_content_row$getPageSource()
 
-      books_html <- books_content_row$getPageSource()
+    # for scrapping
+    l <- get_links(html = rvest::read_html(unlist(books_html)))
+    each_book <- lapply(X = l, FUN = rvest::read_html)
 
-      # for scrapping
-      l <- get_links(html = rvest::read_html(unlist(books_html)))
+    all_data[[page]] <- get_book_details(library_html = books_html,
+                                         book_html = each_book)
 
-      each_book <- lapply(X = l, FUN = rvest::read_html)
+    Sys.sleep(1)
 
-      #
 
-      all_data[[page+1]] <- get_book_details(library_html = books_html,
-                                             book_html = each_book)
+    next_button <-
+      remDr$findElement(using = "xpath", '//a[@aria-label="Next"]')
+    next_button$clickElement()
 
-      Sys.sleep(0.2)
-
-      if(max_page != 1) {
-        next_button <-
-          remDr$findElement(using = "xpath", '//a[@aria-label="Next"]')
-
-        next_button$clickElement()
-      }
-
-    }
 
     page <- page +1
 
   }
 
-  df <- as.data.frame(do.call("rbind", all_data[c(2:max_page)]))
+  if(max_page <= 2) {
+    df <- as.data.frame(do.call("rbind", all_data[- length(all_data)]))
+  } else {
+    df <- as.data.frame(do.call("rbind", all_data[- length(all_data)]))
+  }
+
   message("Script has been completed!")
 
   return(df)
