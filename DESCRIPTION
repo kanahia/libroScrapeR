@@ -1,7 +1,7 @@
 Package: libroScrapeR
 Type: Package
 Title: Facilitate data export from www.lubimyczytac.pl website.
-Version: 0.1.7
+Version: 0.1.8
 Authors@R: 
     person(given = "kanahia",
            role = c("aut", "cre"),
