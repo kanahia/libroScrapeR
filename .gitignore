@@ -2,6 +2,11 @@
 .Rhistory
 .RData
 .Ruserdata
-libroScrapeR.Rproj
+.libroScrapeR.Rproj
+.NEWS.md
+.LICENSE
+.LICENSE.md
+.README.md
+.README.Rmd
 docs
 inst/doc
