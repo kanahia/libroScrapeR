@@ -1,12 +1,7 @@
 libroScrapeR
 ================
 kanahia
-03 October, 2023
-
-<style>
-body {
-text-align: justify}
-</style>
+08 October, 2023
 
 ## Motivation
 
