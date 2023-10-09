@@ -6,6 +6,6 @@
 .NEWS.md
 .LICENSE
 .LICENSE.md
-.libroScrapeR.Rproj
 docs
 inst/doc
+man/libroScrapeR-package.Rd

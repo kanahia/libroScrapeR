@@ -6,7 +6,7 @@
 \alias{libroScrapeR-package}
 \title{libroScrapeR: Facilitate data export from www.lubimyczytac.pl website.}
 \description{
-Package helps to extract several fields describing user library, including title, author, shelf, rate, review and book ISBN number. Extracted data can be utilized as an input for third part services like [https://www.goodreads.com/](https://www.goodreads.com/)
+Package helps to extract several key fields from [https://lubimyczytac.pl/](https://lubimyczytac.pl/) describing user library, including title, author, shelf, rate, read date, review and book ISBN number. Extracted data can be utilized as an input for third part services like [https://www.goodreads.com/](https://www.goodreads.com/)
 }
 \seealso{
 Useful links:

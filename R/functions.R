@@ -140,10 +140,9 @@ get_book_details <- function(library_html,
     stats::setNames(
       c("a.authorAllBooks__singleTextTitle",
         "div.authorAllBooks__singleTextAuthor",
-        "div.authorAllBooks__singleTextShelfRight", #shelf
+        "div.authorAllBooks__singleTextShelfRight",
         "div.authorAllBooks__singleText",
         "div.col.authorAllBooks__singleImg.authorAllBooks__singleImg--list",
-        #"div.comments-list"),
         "div.pl-md-4",
         "p.expandTextNoJS.p-expanded.js-expanded.mb-0"),
       c("Title", "Author", "Shelves", "My Rating",
@@ -176,10 +175,6 @@ get_book_details <- function(library_html,
   # review
   filled_review <- which(out_list$`My Review` != "")
   out_list$`My Review`[filled_review] <- out_list$`My Review filled`
-
-  # out_list$`My Review` <-
-  #   out_list$`My Review` %>%
-  #   gsub(pattern = "\\\n", replacement = "")
 
   out_list <- out_list[c("Title", "Author", "ISBN", "My Rating",
                          "Date Read", "Shelves", "My Review")]
@@ -253,10 +248,6 @@ run_libroScrapeR <- function(URL) {
 
     pb$tick()
 
-    # if(page <= max_page) {
-    #   message(paste0("Proccessing page: ", page, "/", max_page))
-    # }
-
     #get books data
     books_content_row <-
       remDr$findElement(using = "id",
@@ -273,11 +264,9 @@ run_libroScrapeR <- function(URL) {
 
     Sys.sleep(1)
 
-
     next_button <-
       remDr$findElement(using = "xpath", '//a[@aria-label="Next"]')
     next_button$clickElement()
-
 
     page <- page +1
 
